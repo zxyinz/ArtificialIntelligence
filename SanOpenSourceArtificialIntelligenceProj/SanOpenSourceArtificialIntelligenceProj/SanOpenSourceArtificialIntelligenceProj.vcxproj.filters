@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\RelyOn">
+      <UniqueIdentifier>{2ddda4df-e990-44e8-95e6-2cc1cbbf3185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RelyOn">
+      <UniqueIdentifier>{98353a41-f39e-412b-82f0-8ee03b8d1e78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AI">
+      <UniqueIdentifier>{c227071d-1b06-40c8-97f4-b5040cfb3372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AI">
+      <UniqueIdentifier>{abe3ef3b-d21d-47a4-ae02-eb70a66be669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ProblemSet">
+      <UniqueIdentifier>{7c77e29e-b21e-46b4-ac50-f0768ee5ee58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ProblemSet">
+      <UniqueIdentifier>{6b5b6bd9-64be-47aa-a69c-d8a897ad0a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RelyOn\Core">
+      <UniqueIdentifier>{e15b8d1d-cacd-4b64-820d-be2be6696ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RelyOn\Device">
+      <UniqueIdentifier>{c498d4a1-791d-4eef-9626-17094a9ccf65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RelyOn\FileIO">
+      <UniqueIdentifier>{00d7bebf-7263-45b2-b321-d857e09029ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RelyOn\Core">
+      <UniqueIdentifier>{32e3b6af-9012-4d79-b7bf-8fd43548c228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RelyOn\Device">
+      <UniqueIdentifier>{3f69438b-5084-40f1-bc80-4c76e39791fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RelyOn\FileIO">
+      <UniqueIdentifier>{4661b027-3ef3-46b4-a049-cf16562022fc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AI\cGeneralSearchAlgorithm.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ProblemSet\cJugsProblem.h">
+      <Filter>Header Files\ProblemSet</Filter>
+    </ClInclude>
+    <ClInclude Include="ProblemSet\cMCProblem.h">
+      <Filter>Header Files\ProblemSet</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\RenderSystem.h">
+      <Filter>Header Files\RelyOn</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\cVectorManager.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\cVectorManagerDef.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\MsgDef.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\SanContainer.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\SanMathematics.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\SanMemory.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\SanString.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\SanTypes.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Core\WinDataDef.h">
+      <Filter>Header Files\RelyOn\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Device\cSanTerminalDeviceWin.h">
+      <Filter>Header Files\RelyOn\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\Device\SanDevices.h">
+      <Filter>Header Files\RelyOn\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\FileIO\FileLoader.h">
+      <Filter>Header Files\RelyOn\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="RelyOn\FileIO\SanFileIO.h">
+      <Filter>Header Files\RelyOn\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\AIContainer.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="14_3293_ArtificialIntelligence_Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RelyOn\Core\cVectorManager.cpp">
+      <Filter>Source Files\RelyOn\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RelyOn\Core\SanContainer.cpp">
+      <Filter>Source Files\RelyOn\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RelyOn\Core\SanMathematics.cpp">
+      <Filter>Source Files\RelyOn\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RelyOn\Core\SanMemory.cpp">
+      <Filter>Source Files\RelyOn\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RelyOn\Core\SanString.cpp">
+      <Filter>Source Files\RelyOn\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RelyOn\Device\cSanTerminalDeviceWin.cpp">
+      <Filter>Source Files\RelyOn\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="RelyOn\FileIO\SanFileIO.cpp">
+      <Filter>Source Files\RelyOn\FileIO</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
