@@ -2,13 +2,14 @@
 #include"process.h"
 #include"RelyOn\Device\cSanTerminalDeviceWin.h"
 #include"RelyOn\FileIO\SanFileIO.h"
-#include"AI\Container.h"
+#include"AI\AIContainer.h"
 #include"ProblemSet\cJugsProblem.h"
 #include"ProblemSet\cMCProblem.h"
 using namespace std;
 using namespace San;
 using namespace San::Device;
 using namespace San::FileIOStream;
+using namespace San::AI;
 
 int main()
 {
