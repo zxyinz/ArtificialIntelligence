@@ -342,6 +342,182 @@ namespace San
 				return this->OffshootPtrArray.empty();
 			}
 		};
+
+		/*Search Tree Pointer Container*/
+		template<class DType, class WType>
+		struct TREEPTR
+		{
+		public:
+			SEARCHTREE<DType, WType>* pPtr;
+		public:
+			TREEPTR(SEARCHTREE<DType, WType>* pPtr)
+				:pPtr(pPtr)
+			{};
+			~TREEPTR(){};
+		};
+
+		/*Compare Class*/
+		template<class DType, class WType>
+		class TreePtrCompare
+		{
+		public:
+			bool operator()(TREEPTR<DType, WType> LPtr, TREEPTR<DType, WType> RPtr)
+			{
+				return LPtr.pPtr->iGetGlobalWeight()>RPtr.pPtr->iGetGlobalWeight();
+			}
+		};
+
+		/*Weight Structure, for DFS*/
+		template<class NumType>
+		struct COMPARABLEFLOAT
+		{
+		public:
+			vector<NumType> Integer;
+			vector<NumType> Float;
+			bool bIsPositiveNum;
+		public:
+			COMPARABLEFLOAT()
+			{
+				this->Integer.resize(0);
+				this->Float.resize(0);
+				this->bIsPositiveNum = true;
+			};
+
+			COMPARABLEFLOAT(const double Number)
+			{
+				this->iConvertToComparableFloat(Number);
+			};
+
+			~COMPARABLEFLOAT()
+			{
+				this->Integer.clear();
+				this->Float.clear();
+			};
+
+			COMPARABLEFLOAT& operator=(const double &Number)
+			{
+				this->iConvertToComparableFloat(Number);
+				return *this;
+			}
+
+			bool operator<(const COMPARABLEFLOAT<NumType> &Number)
+			{
+				if (this->bIsPositiveNum != Number.bIsPositiveNum)
+				{
+					return (this->bIsPositiveNum) ? false : true;
+				}
+
+				if (this->Integer.size() < Number.Integer.size())
+				{
+					return true;
+				}
+
+				if (this->Integer.size()>Number.Integer.size())
+				{
+					return false;
+				}
+
+				for (uint32 seek = 0; seek < this->Integer.size(); seek = seek + 1)
+				{
+					if (this->Integer[seek] < Number.Integer[seek])
+					{
+						return (this->bIsPositiveNum) ? true : false;
+					}
+					if (this->Integer[seek]>Number.Integer[seek])
+					{
+						return (this->bIsPositiveNum) ? false : true;
+					}
+				}
+
+				uint32 MinFloatSize = this->Float.size() < Number.Float.size() ? this->Float.size() : Number.Float.size();
+
+				for (uint32 seek = 0; seek < MinFloatSize; seek = seek + 1)
+				{
+					if (this->Float[seek] < Number.Float[seek])
+					{
+						return (this->bIsPositiveNum) ? true : false;
+					}
+					if (this->Float[seek]>Number.Float[seek])
+					{
+						return (this->bIsPositiveNum) ? false : true;
+					}
+				}
+
+				if (this->Float.size() < Number.Float.size())
+				{
+					return (this->bIsPositiveNum) ? true : false;
+				}
+
+				/*Case >, == false*/
+				return false;
+			};
+
+			bool operator==(const COMPARABLEFLOAT<NumType> &Number)
+			{
+				if (this->bIsPositiveNum != Number.bIsPositiveNum)
+				{
+					return false;
+				}
+
+				if (this->Integer.size() != Number.Integer.size())
+				{
+					return false;
+				}
+
+				if (this->Float.size() != Number.Float.size())
+				{
+					return false;
+				}
+
+				for (uint32 seek = 0; seek < this->Integer.size(); seek = seek + 1)
+				{
+					if (this->Integer[seek] != Number.Integer[seek])
+					{
+						return false;
+					}
+				}
+
+				for (uint32 seek = 0; seek < this->Float.size(); seek = seek + 1)
+				{
+					if (this->Float[seek] < Number.Float[seek])
+					{
+						return false;
+					}
+				}
+
+				return true;
+			};
+
+			void iConvertToComparableFloat(const double Number)
+			{
+				Integer.clear();
+				Float.clear();
+
+				if (Number < 0.0)
+				{
+					bIsPositiveNum = false;
+				}
+
+				int32 Value = abs(Number);
+
+				while (Value != 0)
+				{
+					Integer.insert(Integer.begin(), Value % 10);
+					Value = Value / 10;
+				}
+
+				double FloatVal = abs(Number - (int32) Number);
+				uint8 SubVal = 0;
+
+				while (FloatVal<0.0)
+				{
+					FloatVal = FloatVal *10.0;
+					SubVal = (uint8) FloatVal % 10;
+					FloatVal = FloatVal - SubVal;
+					Float.push_back((NumType) SubVal);
+				}
+			};
+		};
 #endif
 	}
 }

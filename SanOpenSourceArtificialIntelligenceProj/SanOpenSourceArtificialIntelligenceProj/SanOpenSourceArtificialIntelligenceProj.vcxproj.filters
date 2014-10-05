@@ -105,6 +105,15 @@
     <ClInclude Include="AI\AIContainer.h">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
+    <ClInclude Include="AI\cUniformSearchALgorithm.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\cBreadthFirstSearchAlgorithm.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\cDepthFirstSearchAlgorithm.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="14_3293_ArtificialIntelligence_Main.cpp">

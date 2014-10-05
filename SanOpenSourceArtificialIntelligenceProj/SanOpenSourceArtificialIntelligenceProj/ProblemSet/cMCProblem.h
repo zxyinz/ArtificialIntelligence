@@ -77,7 +77,7 @@ public:
 	}
 };
 
-class cMCProblem : public cGeneralSearchALgorithm<MC, double>
+class cMCProblem : public cGeneralSearchAlgorithm<MC, double>
 {
 private:
 	eSEARCHALGORITHMTYPE m_CurrentSearchALgorithmType;
@@ -539,7 +539,7 @@ public:
 	vector<uint32> iSearch(const MC &InitState, const uint32 MaxDepth, const eSEARCHALGORITHMTYPE Type, SString* pstrOutput = nullptr)
 	{
 		this->m_CurrentSearchALgorithmType = Type;
-		return cGeneralSearchALgorithm::iSearch(InitState, MaxDepth, pstrOutput);
+		return cGeneralSearchAlgorithm::iSearch(InitState, MaxDepth, pstrOutput);
 	};
 };
 #endif

@@ -64,8 +64,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AI\cBreadthFirstSearchAlgorithm.h" />
+    <ClInclude Include="AI\cDepthFirstSearchAlgorithm.h" />
     <ClInclude Include="AI\cGeneralSearchAlgorithm.h" />
     <ClInclude Include="AI\AIContainer.h" />
+    <ClInclude Include="AI\cUniformSearchALgorithm.h" />
     <ClInclude Include="ProblemSet\cJugsProblem.h" />
     <ClInclude Include="ProblemSet\cMCProblem.h" />
     <ClInclude Include="RelyOn\Core\cVectorManager.h" />

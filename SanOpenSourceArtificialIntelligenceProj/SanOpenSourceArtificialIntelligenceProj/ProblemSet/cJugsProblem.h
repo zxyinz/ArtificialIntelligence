@@ -27,7 +27,7 @@ public:
 	}
 };
 
-class cJugsProblem : public cGeneralSearchALgorithm<JUGS, double>
+class cJugsProblem : public cGeneralSearchAlgorithm<JUGS, double>
 {
 private:
 	eSEARCHALGORITHMTYPE m_CurrentSearchALgorithmType;
@@ -274,7 +274,7 @@ public:
 	vector<uint32> iSearch(const JUGS &InitState, const uint32 MaxDepth, const eSEARCHALGORITHMTYPE Type, SString* pstrOutput = nullptr)
 	{
 		this->m_CurrentSearchALgorithmType = Type;
-		return cGeneralSearchALgorithm::iSearch(InitState, MaxDepth, pstrOutput);
+		return cGeneralSearchAlgorithm::iSearch(InitState, MaxDepth, pstrOutput);
 	};
 };
 #endif
