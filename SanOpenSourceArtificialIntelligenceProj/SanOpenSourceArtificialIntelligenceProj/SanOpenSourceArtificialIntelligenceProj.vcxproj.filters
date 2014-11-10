@@ -114,6 +114,18 @@
     <ClInclude Include="AI\cDepthFirstSearchAlgorithm.h">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
+    <ClInclude Include="AI\cMinMaxAlgorithm.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ProblemSet\cHOP.h">
+      <Filter>Header Files\ProblemSet</Filter>
+    </ClInclude>
+    <ClInclude Include="ProblemSet\cHOPAI.h">
+      <Filter>Header Files\ProblemSet</Filter>
+    </ClInclude>
+    <ClInclude Include="ProblemUIFunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="14_3293_ArtificialIntelligence_Main.cpp">
@@ -139,6 +151,21 @@
     </ClCompile>
     <ClCompile Include="RelyOn\FileIO\SanFileIO.cpp">
       <Filter>Source Files\RelyOn\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="ProblemSet\cHOP.cpp">
+      <Filter>Source Files\ProblemSet</Filter>
+    </ClCompile>
+    <ClCompile Include="ProblemSet\cHOPAI.cpp">
+      <Filter>Source Files\ProblemSet</Filter>
+    </ClCompile>
+    <ClCompile Include="ProblemSet\cJugsProblem.cpp">
+      <Filter>Source Files\ProblemSet</Filter>
+    </ClCompile>
+    <ClCompile Include="ProblemSet\cMCProblem.cpp">
+      <Filter>Source Files\ProblemSet</Filter>
+    </ClCompile>
+    <ClCompile Include="ProblemUIFunc.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

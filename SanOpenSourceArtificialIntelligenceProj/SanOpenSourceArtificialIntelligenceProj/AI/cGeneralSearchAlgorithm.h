@@ -133,12 +133,12 @@ namespace San
 
 					this->_GenerateSuccessorNodes(pCurrentNode, GlobalID);
 
-					for (uint32 seek = 0; seek < pCurrentNode->iGetOffshotListSize(); seek = seek + 1)
+					for (uint32 seek = 0; seek < pCurrentNode->iGetOffshootListSize(); seek = seek + 1)
 					{
-						MinHeap.push(TREEPTR<DType, WType>(pCurrentNode->iGetOffshotPtr(seek)));
+						MinHeap.push(TREEPTR<DType, WType>(pCurrentNode->iGetOffshootPtr(seek)));
 					}
 
-					GlobalID = GlobalID + pCurrentNode->iGetOffshotListSize();
+					GlobalID = GlobalID + pCurrentNode->iGetOffshootListSize();
 				}
 
 				/*No solution found, return empty path*/
@@ -173,9 +173,9 @@ namespace San
 					*pstrString = *pstrString + "\r\n";
 				}
 
-				for (uint32 seek = 0; seek < pTree->iGetOffshotListSize(); seek = seek + 1)
+				for (uint32 seek = 0; seek < pTree->iGetOffshootListSize(); seek = seek + 1)
 				{
-					this->_PrintTree(pTree->iGetOffshotPtr(seek), pstrString);
+					this->_PrintTree(pTree->iGetOffshootPtr(seek), pstrString);
 				}
 			};
 		protected:

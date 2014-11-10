@@ -68,9 +68,13 @@
     <ClInclude Include="AI\cDepthFirstSearchAlgorithm.h" />
     <ClInclude Include="AI\cGeneralSearchAlgorithm.h" />
     <ClInclude Include="AI\AIContainer.h" />
+    <ClInclude Include="AI\cMinMaxAlgorithm.h" />
     <ClInclude Include="AI\cUniformSearchALgorithm.h" />
+    <ClInclude Include="ProblemSet\cHOP.h" />
+    <ClInclude Include="ProblemSet\cHOPAI.h" />
     <ClInclude Include="ProblemSet\cJugsProblem.h" />
     <ClInclude Include="ProblemSet\cMCProblem.h" />
+    <ClInclude Include="ProblemUIFunc.h" />
     <ClInclude Include="RelyOn\Core\cVectorManager.h" />
     <ClInclude Include="RelyOn\Core\cVectorManagerDef.h" />
     <ClInclude Include="RelyOn\Core\MsgDef.h" />
@@ -88,6 +92,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="14_3293_ArtificialIntelligence_Main.cpp" />
+    <ClCompile Include="ProblemSet\cHOP.cpp" />
+    <ClCompile Include="ProblemSet\cHOPAI.cpp" />
+    <ClCompile Include="ProblemSet\cJugsProblem.cpp" />
+    <ClCompile Include="ProblemSet\cMCProblem.cpp" />
+    <ClCompile Include="ProblemUIFunc.cpp" />
     <ClCompile Include="RelyOn\Core\cVectorManager.cpp" />
     <ClCompile Include="RelyOn\Core\SanContainer.cpp" />
     <ClCompile Include="RelyOn\Core\SanMathematics.cpp" />

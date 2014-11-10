@@ -3,6 +3,7 @@ using namespace std;
 using namespace San;
 using namespace San::Device;
 #ifdef _WINDOWS
+bool cSanTerminalDeviceWin::m_bTerminalLock = false;
 void cSanTerminalDeviceWin::iSetTerminalTittle(SString strTittle)
 {
 	if(!strTittle.empty())
@@ -38,6 +39,63 @@ void cSanTerminalDeviceWin::_CreateConsoleDevice()
 	::freopen("CONIN$","r+t",stdin);
 	::freopen("CONOUT$","w+t",stdout);
 }
+void cSanTerminalDeviceWin::_OutputStringA(SStringA strString, eSANTERMINALCOLOR TextColor, eSANTERMINALCOLOR BackgroundColor)
+{
+	if ((TextColor == STC_DEFAULT) && (BackgroundColor == STC_DEFAULT))
+	{
+		//::printf("%s",strString.c_str());
+		::cout << strString.c_str();
+	}
+	else
+	{
+		if (TextColor == STC_DEFAULT)
+		{
+			TextColor = this->m_TextDefColor;
+		}
+		if (BackgroundColor == STC_DEFAULT)
+		{
+			BackgroundColor = this->m_BackgroundDefColor;
+		}
+		::SetConsoleTextAttribute(this->m_TerminalHandle, TextColor | (BackgroundColor << 4));
+		//::printf("%s",strString.c_str());
+		::cout << strString.c_str();
+		::SetConsoleTextAttribute(this->m_TerminalHandle, this->m_TextDefColor | (this->m_BackgroundDefColor << 4));
+	}
+}
+void cSanTerminalDeviceWin::_OutputStringW(SStringW strString, eSANTERMINALCOLOR TextColor, eSANTERMINALCOLOR BackgroundColor)
+{
+	if ((TextColor == STC_DEFAULT) && (BackgroundColor == STC_DEFAULT))
+	{
+		//::wprintf(L"%s",strString.c_str());
+		::wcout << strString.c_str();
+	}
+	else
+	{
+		if (TextColor == STC_DEFAULT)
+		{
+			TextColor = this->m_TextDefColor;
+		}
+		if (BackgroundColor == STC_DEFAULT)
+		{
+			BackgroundColor = this->m_BackgroundDefColor;
+		}
+		::SetConsoleTextAttribute(this->m_TerminalHandle, TextColor | (BackgroundColor << 4));
+		//::wprintf(L"%s",strString.c_str());
+		::wcout << strString.c_str();
+		::SetConsoleTextAttribute(this->m_TerminalHandle, this->m_TextDefColor | (this->m_BackgroundDefColor << 4));
+	}
+}
+void cSanTerminalDeviceWin::_LockTerminal()
+{
+	while (this->m_bTerminalLock)
+	{
+	}
+	this->m_bTerminalLock = true;
+}
+void cSanTerminalDeviceWin::_UnLockTerminal()
+{
+	this->m_bTerminalLock = false;
+}
 bool cSanTerminalDeviceWin::iSetTerminalBufferSize(uint32 BufferSize)
 {
 	if(BufferSize==0)
@@ -71,6 +129,12 @@ uint32 cSanTerminalDeviceWin::iGetTerminalBufferSize()
 {
 	return this->m_BufferSize;
 }
+SPOINT3 cSanTerminalDeviceWin::iGetCurrentCursorPosition()
+{
+	CONSOLE_SCREEN_BUFFER_INFO BufferInfo;
+	::GetConsoleScreenBufferInfo(this->m_TerminalHandle, &BufferInfo);
+	return SPOINT3(BufferInfo.dwCursorPosition.X, BufferInfo.dwCursorPosition.Y, 0);
+}
 SString cSanTerminalDeviceWin::iGetInputString(schar DelLim)
 {
 #ifndef _UNICODE
@@ -86,26 +150,9 @@ void cSanTerminalDeviceWin::iOutputStringA(SStringA strString,eSANTERMINALCOLOR 
 	{
 		return;
 	}
-	if((TextColor==STC_DEFAULT)&&(BackgroundColor==STC_DEFAULT))
-	{
-		//::printf("%s",strString.c_str());
-		::cout<<strString.c_str();
-	}
-	else
-	{
-		if(TextColor==STC_DEFAULT)
-		{
-			TextColor=this->m_TextDefColor;
-		}
-		if(BackgroundColor==STC_DEFAULT)
-		{
-			BackgroundColor=this->m_BackgroundDefColor;
-		}
-		::SetConsoleTextAttribute(this->m_TerminalHandle,TextColor|(BackgroundColor<<4));
-		//::printf("%s",strString.c_str());
-		::cout<<strString.c_str();
-		::SetConsoleTextAttribute(this->m_TerminalHandle,this->m_TextDefColor|(this->m_BackgroundDefColor<<4));
-	}
+	this->_LockTerminal();
+	this->_OutputStringA(strString, TextColor, BackgroundColor);
+	this->_UnLockTerminal();
 }
 void cSanTerminalDeviceWin::iOutputStringW(SStringW strString,eSANTERMINALCOLOR TextColor,eSANTERMINALCOLOR BackgroundColor)
 {
@@ -113,26 +160,9 @@ void cSanTerminalDeviceWin::iOutputStringW(SStringW strString,eSANTERMINALCOLOR 
 	{
 		return;
 	}
-	if((TextColor==STC_DEFAULT)&&(BackgroundColor==STC_DEFAULT))
-	{
-		//::wprintf(L"%s",strString.c_str());
-		::wcout<<strString.c_str();
-	}
-	else
-	{
-		if(TextColor==STC_DEFAULT)
-		{
-			TextColor=this->m_TextDefColor;
-		}
-		if(BackgroundColor==STC_DEFAULT)
-		{
-			BackgroundColor=this->m_BackgroundDefColor;
-		}
-		::SetConsoleTextAttribute(this->m_TerminalHandle,TextColor|(BackgroundColor<<4));
-		//::wprintf(L"%s",strString.c_str());
-		::wcout<<strString.c_str();
-		::SetConsoleTextAttribute(this->m_TerminalHandle,this->m_TextDefColor|(this->m_BackgroundDefColor<<4));
-	}
+	this->_LockTerminal();
+	this->_OutputStringW(strString, TextColor, BackgroundColor);
+	this->_UnLockTerminal();
 }
 void cSanTerminalDeviceWin::iOutputString(SString strString,eSANTERMINALCOLOR TextColor,eSANTERMINALCOLOR BackgroundColor)
 {
@@ -142,10 +172,52 @@ void cSanTerminalDeviceWin::iOutputString(SString strString,eSANTERMINALCOLOR Te
 	this->iOutputStringW(strString,TextColor,BackgroundColor);
 #endif
 }
+void cSanTerminalDeviceWin::iOutputStringA(SStringA strString, const SPOINT3 &Pos, eSANTERMINALCOLOR TextColor, eSANTERMINALCOLOR BackgroundColor)
+{
+	this->_LockTerminal();
+	CONSOLE_SCREEN_BUFFER_INFO BufferInfo;
+	::GetConsoleScreenBufferInfo(this->m_TerminalHandle, &BufferInfo);
+
+	COORD Coord;
+	Coord.X = Pos.x;
+	Coord.Y = Pos.y;
+
+	::SetConsoleCursorPosition(this->m_TerminalHandle, Coord);
+	this->_OutputStringA(strString, TextColor, BackgroundColor);
+
+	::SetConsoleCursorPosition(this->m_TerminalHandle, BufferInfo.dwCursorPosition);
+	this->_UnLockTerminal();
+}
+void cSanTerminalDeviceWin::iOutputStringW(SStringW strString, const SPOINT3 &Pos, eSANTERMINALCOLOR TextColor, eSANTERMINALCOLOR BackgroundColor)
+{
+	this->_LockTerminal();
+	CONSOLE_SCREEN_BUFFER_INFO BufferInfo;
+	::GetConsoleScreenBufferInfo(this->m_TerminalHandle, &BufferInfo);
+
+	COORD Coord;
+	Coord.X = Pos.x;
+	Coord.Y = Pos.y;
+
+	::SetConsoleCursorPosition(this->m_TerminalHandle, Coord);
+	this->_OutputStringW(strString, TextColor, BackgroundColor);
+
+	::SetConsoleCursorPosition(this->m_TerminalHandle, BufferInfo.dwCursorPosition);
+	this->_UnLockTerminal();
+}
+void cSanTerminalDeviceWin::iOutputString(SString strString, const SPOINT3 &Pos, eSANTERMINALCOLOR TextColor, eSANTERMINALCOLOR BackgroundColor)
+{
+#ifndef _UNICODE
+	this->iOutputStringA(strString, Pos, TextColor, BackgroundColor);
+#else
+	this->iOutputStringW(strString, Pos, TextColor, BackgroundColor);
+#endif
+}
 //void cSanTerminalDeviceWin::iClearLine()
 //{
 void cSanTerminalDeviceWin::iClearScreen()
 {
+	this->_LockTerminal();
 	::system("cls");
+	this->_UnLockTerminal();
 }
 #endif

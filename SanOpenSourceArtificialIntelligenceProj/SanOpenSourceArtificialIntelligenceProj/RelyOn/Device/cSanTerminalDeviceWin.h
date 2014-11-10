@@ -1,7 +1,9 @@
 #include"..\RenderSystem.h"
 #include"..\Core\SanTypes.h"
+#include"..\Core\SanMathematics.h"
 //#include"..\Core\cSanResourceManagerDef.h"
 using namespace std;
+using namespace San::Mathematics;
 #pragma once
 namespace San
 {
@@ -43,8 +45,13 @@ namespace San
 			schar* m_pTerminalBuffer;//////////////
 			uint32 m_BufferSize;///////////////////
 			SString m_strBuffer;
+			static bool m_bTerminalLock;
 		protected:
 			void _CreateConsoleDevice();
+			void _OutputStringA(SStringA strString, eSANTERMINALCOLOR TextColor, eSANTERMINALCOLOR BackgroundColor);
+			void _OutputStringW(SStringW strString, eSANTERMINALCOLOR TextColor, eSANTERMINALCOLOR BackgroundColor);
+			void _LockTerminal();
+			void _UnLockTerminal();
 		public:
 			cSanTerminalDeviceWin(SString strTerminalName=_SSTR("SanLabTerminal"),SString strTerminalTittle=_SSTR("San Lab Terminal"))
 				:m_strTerminalName(strTerminalName),
@@ -85,10 +92,14 @@ namespace San
 			eSANTERMINALCOLOR iGetDefaultTextColor();
 			eSANTERMINALCOLOR iGetDefaultBackgroundColor();
 			uint32 iGetTerminalBufferSize();
+			SPOINT3 iGetCurrentCursorPosition();
 			SString iGetInputString(schar DelLim=_SSTR('\n'));
 			void iOutputStringA(SStringA strString,eSANTERMINALCOLOR TextColor=STC_DEFAULT,eSANTERMINALCOLOR BackgroundColor=STC_DEFAULT);
 			void iOutputStringW(SStringW strString,eSANTERMINALCOLOR TextColor=STC_DEFAULT,eSANTERMINALCOLOR BackgroundColor=STC_DEFAULT);
 			void iOutputString(SString strString,eSANTERMINALCOLOR TextColor=STC_DEFAULT,eSANTERMINALCOLOR BackgroundColor=STC_DEFAULT);
+			void iOutputStringA(SStringA strString, const SPOINT3 &Pos, eSANTERMINALCOLOR TextColor = STC_DEFAULT, eSANTERMINALCOLOR BackgroundColor = STC_DEFAULT);
+			void iOutputStringW(SStringW strString, const SPOINT3 &Pos, eSANTERMINALCOLOR TextColor = STC_DEFAULT, eSANTERMINALCOLOR BackgroundColor = STC_DEFAULT);
+			void iOutputString(SString strString, const SPOINT3 &Pos, eSANTERMINALCOLOR TextColor = STC_DEFAULT, eSANTERMINALCOLOR BackgroundColor = STC_DEFAULT);
 			void iClearLine();/////////////////////
 			void iClearScreen();
 		};

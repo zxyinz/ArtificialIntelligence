@@ -119,7 +119,7 @@ namespace San
 				this->Depth = Depth;
 				return true;
 			};
-			bool iSetTrunkPtr(const SEARCHTREE<DType, WType>* pTrunk)
+			bool iSetTrunkPtr(SEARCHTREE<DType, WType>* pTrunk)
 			{
 				if (this->bCopy)
 				{
@@ -273,9 +273,19 @@ namespace San
 				this->OffshootPtrArray.clear();
 				this->OffshootWeightArray.clear();
 			}
-			void iSetGlobalWeight(WType GlobalWeight)
+			bool iSetOffshootWeight(const uint32 ID, const WType Weight)
+			{
+				if (ID >= this->OffshootWeightArray.size())
+				{
+					return false;
+				}
+				this->OffshootWeightArray[ID] = Weight;
+				return true;
+			}
+			WType iSetGlobalWeight(WType GlobalWeight)
 			{
 				this->GlobalWeight = GlobalWeight;
+				return this->GlobalWeight;
 			}
 			const uint32 iGetTreeID() const
 			{
@@ -289,6 +299,14 @@ namespace San
 			{
 				return Data;
 			};
+			const DType* iGetDataPtrConst() const
+			{
+				return &Data;
+			};
+			DType* iGetDataPtr()
+			{
+				return &Data;
+			};
 			uint32 iGetDepth() const
 			{
 				return Depth;
@@ -301,11 +319,11 @@ namespace San
 			{
 				return this->pTrunk;
 			};
-			const uint32 iGetOffshotListSize() const
+			const uint32 iGetOffshootListSize() const
 			{
 				return this->OffshootPtrArray.size();
 			};
-			const SEARCHTREE<DType, WType>* iGetOffshotPtrConst(const uint32 ID) const
+			const SEARCHTREE<DType, WType>* iGetOffshootPtrConst(const uint32 ID) const
 			{
 				if (ID >= this->OffshootPtrArray.size())
 				{
@@ -313,7 +331,7 @@ namespace San
 				}
 				return this->OffshootPtrArray[ID];
 			};
-			SEARCHTREE<DType, WType>* iGetOffshotPtr(const uint32 ID) const
+			SEARCHTREE<DType, WType>* iGetOffshootPtr(const uint32 ID) const
 			{
 				if (ID >= this->OffshootPtrArray.size())
 				{
@@ -325,7 +343,7 @@ namespace San
 			{
 				if (ID >= this->OffshootWeightArray.size())
 				{
-					return nullptr;
+					return 0.0;
 				}
 				return this->OffshootWeightArray[ID];
 			}
@@ -343,7 +361,6 @@ namespace San
 			}
 		};
 
-		/*Search Tree Pointer Container*/
 		template<class DType, class WType>
 		struct TREEPTR
 		{
@@ -356,7 +373,6 @@ namespace San
 			~TREEPTR(){};
 		};
 
-		/*Compare Class*/
 		template<class DType, class WType>
 		class TreePtrCompare
 		{
@@ -365,158 +381,6 @@ namespace San
 			{
 				return LPtr.pPtr->iGetGlobalWeight()>RPtr.pPtr->iGetGlobalWeight();
 			}
-		};
-
-		/*Weight Structure, for DFS*/
-		template<class NumType>
-		struct COMPARABLEFLOAT
-		{
-		public:
-			vector<NumType> Integer;
-			vector<NumType> Float;
-			bool bIsPositiveNum;
-		public:
-			COMPARABLEFLOAT()
-			{
-				this->Integer.resize(0);
-				this->Float.resize(0);
-				this->bIsPositiveNum = true;
-			};
-
-			COMPARABLEFLOAT(const double Number)
-			{
-				this->iConvertToComparableFloat(Number);
-			};
-
-			~COMPARABLEFLOAT()
-			{
-				this->Integer.clear();
-				this->Float.clear();
-			};
-
-			COMPARABLEFLOAT& operator=(const double &Number)
-			{
-				this->iConvertToComparableFloat(Number);
-				return *this;
-			}
-
-			bool operator<(const COMPARABLEFLOAT<NumType> &Number)
-			{
-				if (this->bIsPositiveNum != Number.bIsPositiveNum)
-				{
-					return (this->bIsPositiveNum) ? false : true;
-				}
-
-				if (this->Integer.size() < Number.Integer.size())
-				{
-					return true;
-				}
-
-				if (this->Integer.size()>Number.Integer.size())
-				{
-					return false;
-				}
-
-				for (uint32 seek = 0; seek < this->Integer.size(); seek = seek + 1)
-				{
-					if (this->Integer[seek] < Number.Integer[seek])
-					{
-						return (this->bIsPositiveNum) ? true : false;
-					}
-					if (this->Integer[seek]>Number.Integer[seek])
-					{
-						return (this->bIsPositiveNum) ? false : true;
-					}
-				}
-
-				uint32 MinFloatSize = this->Float.size() < Number.Float.size() ? this->Float.size() : Number.Float.size();
-
-				for (uint32 seek = 0; seek < MinFloatSize; seek = seek + 1)
-				{
-					if (this->Float[seek] < Number.Float[seek])
-					{
-						return (this->bIsPositiveNum) ? true : false;
-					}
-					if (this->Float[seek]>Number.Float[seek])
-					{
-						return (this->bIsPositiveNum) ? false : true;
-					}
-				}
-
-				if (this->Float.size() < Number.Float.size())
-				{
-					return (this->bIsPositiveNum) ? true : false;
-				}
-
-				/*Case >, == false*/
-				return false;
-			};
-
-			bool operator==(const COMPARABLEFLOAT<NumType> &Number)
-			{
-				if (this->bIsPositiveNum != Number.bIsPositiveNum)
-				{
-					return false;
-				}
-
-				if (this->Integer.size() != Number.Integer.size())
-				{
-					return false;
-				}
-
-				if (this->Float.size() != Number.Float.size())
-				{
-					return false;
-				}
-
-				for (uint32 seek = 0; seek < this->Integer.size(); seek = seek + 1)
-				{
-					if (this->Integer[seek] != Number.Integer[seek])
-					{
-						return false;
-					}
-				}
-
-				for (uint32 seek = 0; seek < this->Float.size(); seek = seek + 1)
-				{
-					if (this->Float[seek] < Number.Float[seek])
-					{
-						return false;
-					}
-				}
-
-				return true;
-			};
-
-			void iConvertToComparableFloat(const double Number)
-			{
-				Integer.clear();
-				Float.clear();
-
-				if (Number < 0.0)
-				{
-					bIsPositiveNum = false;
-				}
-
-				int32 Value = abs(Number);
-
-				while (Value != 0)
-				{
-					Integer.insert(Integer.begin(), Value % 10);
-					Value = Value / 10;
-				}
-
-				double FloatVal = abs(Number - (int32) Number);
-				uint8 SubVal = 0;
-
-				while (FloatVal<0.0)
-				{
-					FloatVal = FloatVal *10.0;
-					SubVal = (uint8) FloatVal % 10;
-					FloatVal = FloatVal - SubVal;
-					Float.push_back((NumType) SubVal);
-				}
-			};
 		};
 #endif
 	}
