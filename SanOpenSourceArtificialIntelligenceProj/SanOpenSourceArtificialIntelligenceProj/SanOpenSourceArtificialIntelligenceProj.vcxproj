@@ -69,7 +69,9 @@
     <ClInclude Include="AI\cGeneralSearchAlgorithm.h" />
     <ClInclude Include="AI\AIContainer.h" />
     <ClInclude Include="AI\cMinMaxAlgorithm.h" />
+    <ClInclude Include="AI\cPropositionalLogicResolutionAlgorithm.h" />
     <ClInclude Include="AI\cUniformSearchALgorithm.h" />
+    <ClInclude Include="AI\PropositionalLogicRuleDef.h" />
     <ClInclude Include="ProblemSet\cHOP.h" />
     <ClInclude Include="ProblemSet\cHOPAI.h" />
     <ClInclude Include="ProblemSet\cJugsProblem.h" />
@@ -92,6 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="14_3293_ArtificialIntelligence_Main.cpp" />
+    <ClCompile Include="AI\cPropositionalLogicResolutionAlgorithm.cpp" />
+    <ClCompile Include="AI\PropositionalLogicRuleDef.cpp" />
     <ClCompile Include="ProblemSet\cHOP.cpp" />
     <ClCompile Include="ProblemSet\cHOPAI.cpp" />
     <ClCompile Include="ProblemSet\cJugsProblem.cpp" />

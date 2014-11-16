@@ -469,3 +469,206 @@ void HOPProblemPrintTime(cSanTerminalDevice* pTerminal, const SPOINT3 &Coord, co
 
 	pTerminal->iOutputString(::gloIToS(Hour) + _SSTR(" hour ") + ::gloIToS(Min) + _SSTR(" min ") + ::gloIToS(Sec) + _SSTR(" sec ") + ::gloIToS(MS) + _SSTR(" ms"), Coord, TextColor, BackgroundColor);
 }
+void CNFProblem(cSanTerminalDevice* pTerminal, SString* pstrOutputString)
+{
+	std::ios::sync_with_stdio(false);
+
+	SString strTitle;
+	strTitle = strTitle + "/*--------------- CSE5290 Artificial Intelligence ---------------*/\n";
+	strTitle = strTitle + "/*Project: Propositional Logic Resolution Algorithm              */\n";
+	strTitle = strTitle + "/*Author:  Wang Kai                                              */\n";
+	strTitle = strTitle + "/*---------------------------------------------------------------*/\n";
+
+	SString strLine = _SSTR("--------------------------------------------------\r\n");
+
+	cSanTerminalDevice Terminal;
+	Terminal.iSetTerminalTittle(_SSTR("San Artificial Intelligence Terminal"));
+
+	SString strOutput;
+
+	char Buffer[1024];
+
+	Terminal.iOutputString(strTitle);
+
+	SString strCommand = Buffer;
+
+	while (true)
+	{
+		Terminal.iClearScreen();
+
+		Terminal.iOutputString(strTitle);
+
+		Terminal.iOutputString(_SSTR("INPUT: Propositional Logic Rule String\r\n"), STC_GREY);
+		Terminal.iOutputString(_SSTR("EXAMPLE INPUT: !( !a & b ) => ( c & ( d | !e ) )\r\n"), STC_GREY);
+		Terminal.iOutputString(_SSTR("EXAMPLE OUTPUT: (a | c) & (a | d | !e) & (b | c) & (b | d | !e)\r\n"), STC_GREY);
+
+		Terminal.iOutputString(_SSTR("Command>"));
+		::cin.getline(Buffer, 1024);
+
+		strCommand = Buffer;
+
+		PROPOSITIONALLOGICRULE Rule(strCommand);
+
+		Terminal.iOutputString(_SSTR("\r\nINPUT TREE:\r\n"), STC_GREY);
+		Terminal.iOutputString(strLine, STC_GREY);
+
+		Terminal.iOutputString(Rule.iPrintTree() + _SSTR("\r\n"));
+
+		Terminal.iOutputString(_SSTR("OUTPUT TREE (CNF TREE):\r\n"), STC_GREY);
+		Terminal.iOutputString(strLine, STC_GREY);
+
+		Rule.iConvertToCNF();
+
+		Terminal.iOutputString(Rule.iPrintTree() + _SSTR("\r\n"));
+
+		::system("pause");
+	}
+}
+void ResolutionAlgorithmProblem(cSanTerminalDevice* pTerminal, SString* pstrOutputString)
+{
+	std::ios::sync_with_stdio(false);
+
+	SString strTitle;
+	strTitle = strTitle + "/*--------------- CSE5290 Artificial Intelligence ---------------*/\n";
+	strTitle = strTitle + "/*Project: Propositional Logic Resolution Algorithm              */\n";
+	strTitle = strTitle + "/*Author:  Wang Kai                                              */\n";
+	strTitle = strTitle + "/*---------------------------------------------------------------*/\n";
+
+	SString strLine = _SSTR("--------------------------------------------------\r\n");
+
+	cSanTerminalDevice Terminal;
+	Terminal.iSetTerminalTittle(_SSTR("San Artificial Intelligence Terminal"));
+
+	SString strOutput;
+
+	char Buffer[1024];
+
+	Terminal.iOutputString(strTitle);
+
+	SString strCommand = Buffer;
+
+	Terminal.iClearScreen();
+
+	Terminal.iOutputString(strTitle);
+
+	Terminal.iOutputString(_SSTR("COMMAND: Load [knowledge database path]     Load the knowledge database\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("COMMAND: Solve [propositional logic rule]   Solve the logic question\r\n\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("DEFAULT KNOWLEDGE DATABASE PATH:\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("\twumpus.txt\tWumpus Knowledge Database\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("\tunicorn.txt\tUnicorn Knowledge Database\r\n\r\n"), STC_GREY);
+
+	cPropositionalLogicResolutionAlgorithm ResolutionAlgorithm;
+
+	while (true)
+	{
+		Terminal.iOutputString(_SSTR("Command>"));
+
+		::cin.getline(Buffer, 1024);
+
+		strCommand = Buffer;
+
+		if (strCommand.empty())
+		{
+			continue;
+		}
+
+		vector<SString> strItems = ::gloGetStringItems(strCommand, _SSTR(" "));
+
+		if (strItems.size() < 2)
+		{
+			Terminal.iOutputString("Error: Invalid command\n", STC_WHITE, STC_RED);
+			::system("pause");
+			continue;
+		}
+
+		if (strItems[0] == _SSTR("Load"))
+		{
+			SStringA strKnowledgeDataBase;
+
+			if (!gloLoadFile(strItems[1], strKnowledgeDataBase))
+			{
+				Terminal.iOutputString("Error: Load knowledge database file failed\n", STC_WHITE, STC_RED);
+				::system("pause");
+				continue;
+			}
+			vector<SString> strSubString = ::gloGetStringItems(::gloAToT(strKnowledgeDataBase), _SSTR("\r\n"));
+
+			Terminal.iOutputString(_SSTR("\r\nKNOWLEDGE DATABASE LOGIC RULE LIST:\r\n"), STC_GREY);
+			Terminal.iOutputString(strLine, STC_GREY);
+
+			for (uint32 seek = 0; seek < strSubString.size(); seek = seek + 1)
+			{
+				Terminal.iOutputString(strSubString[seek] + _SSTR("\r\n"));
+			}
+
+			ResolutionAlgorithm.iClearClauses();
+
+			ResolutionAlgorithm.iGenerateKnowedgeBase(strSubString);
+
+			Terminal.iOutputString(_SSTR("CLAUSES LIST:\r\n"), STC_GREY);
+			Terminal.iOutputString(strLine, STC_GREY);
+
+			Terminal.iOutputString(ResolutionAlgorithm.iPrintKnowledgeBase() + _SSTR("\r\n"));
+
+			//::system("pause");
+
+			continue;
+		}
+
+		if (strItems[0] == _SSTR("Solve"))
+		{
+			strCommand = strCommand.substr(6, strCommand.size() - 6);
+
+			Terminal.iOutputString(_SSTR("\r\nInput question:\r\n"), STC_GREY);
+			Terminal.iOutputString(strLine, STC_GREY);
+
+			Terminal.iOutputString(strCommand + _SSTR("\r\n\r\n"));
+
+			Terminal.iOutputString(_SSTR("Input question (CNF):\r\n"), STC_GREY);
+			Terminal.iOutputString(strLine, STC_GREY);
+
+			PROPOSITIONALLOGICRULE Rule(strCommand);
+			Rule.iConvertToCNF();
+			Rule.iGenerateLogicString();
+
+			Terminal.iOutputString(Rule.iGetLogicString() + _SSTR("\r\n\r\n"));
+
+			switch (ResolutionAlgorithm.iResolve(strCommand))
+			{
+			case LR_TRUE:
+				Terminal.iOutputString(_SSTR("General Resolve Algorithm Result: TRUE\r\n"));
+				break;
+			case LR_FALSE:
+				Terminal.iOutputString(_SSTR("General Resolve Algorithm Result: FALSE\r\n"));
+				break;
+			case LR_UNKNOWN:
+				Terminal.iOutputString(_SSTR("General Resolve Algorithm Result: UNKNOWN\r\n"));
+				break;
+			default:
+				Terminal.iOutputString(_SSTR("Error: Unknown result\r\n"), STC_WHITE, STC_RED);
+				break;
+			}
+
+			switch (ResolutionAlgorithm.iResolveOptimize(strCommand))
+			{
+			case LR_TRUE:
+				Terminal.iOutputString(_SSTR("Optimized Resolve Algorithm Result: TRUE\r\n"));
+				break;
+			case LR_FALSE:
+				Terminal.iOutputString(_SSTR("Optimized Resolve Algorithm Result: FALSE\r\n"));
+				break;
+			case LR_UNKNOWN:
+				Terminal.iOutputString(_SSTR("Optimized Resolve Algorithm Result: UNKNOWN\r\n"));
+				break;
+			default:
+				Terminal.iOutputString(_SSTR("Error: Unknown result\r\n"), STC_WHITE, STC_RED);
+				break;
+			}
+			::system("pause");
+			continue;
+		}
+
+		Terminal.iOutputString("Error: Invalid command\n", STC_WHITE, STC_RED);
+		::system("pause");
+	}
+}

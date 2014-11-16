@@ -1,0 +1,4 @@
+(unicorn & mythical) => immortal
+(unicorn & !mythical) => mammal
+(unicorn & (immortal | mammal)) => horned
+(unicorn & horned) => magical

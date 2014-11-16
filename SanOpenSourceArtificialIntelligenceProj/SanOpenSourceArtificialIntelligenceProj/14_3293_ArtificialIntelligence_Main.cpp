@@ -16,24 +16,23 @@ int main()
 
 	char Buffer[1024];
 
-	::cout << "Please select search problem set \n\t(J for Jugs, M for MC, H for HOP)\nCommander>";
-	::cin >> Buffer;
+	Terminal.iOutputString(_SSTR("Please select search problem set: \r\n"));
+	Terminal.iOutputString(_SSTR("\tJ                   for Jugs\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("\tM                   for MC\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("\tH                   for HOP\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("\tCNF                 for CNF\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("\tResolutionAlgorithm for Propositional Logic Resolution Algorithm\r\n"), STC_GREY);
+	Terminal.iOutputString(_SSTR("Commander> "));
+	::cin.getline(Buffer, 1024);
 
-	switch (Buffer[0])
-	{
-	case 'J':
-		JugsProblem(&Terminal, &strOutput);
-		break;
-	case 'H':
-		::cin.getline(Buffer, 1024);
-		HOPProblem(&Terminal, &strOutput);
-		break;
-	case 'M':
-		MCProblem(&Terminal, &strOutput);
-		break;
-	default:
-		break;
-	}
+	SString strCommand = Buffer;
+
+
+	if (strCommand == _SSTR("J")){ JugsProblem(&Terminal, &strOutput); }
+	if (strCommand == _SSTR("H")){ HOPProblem(&Terminal, &strOutput); }
+	if (strCommand == _SSTR("M")){ MCProblem(&Terminal, &strOutput); }
+	if (strCommand == _SSTR("CNF")){ CNFProblem(&Terminal, &strOutput); }
+	if (strCommand == _SSTR("ResolutionAlgorithm")){ ResolutionAlgorithmProblem(&Terminal, &strOutput); }
 
 	::gloWriteFile(_SSTR("Output.txt"), strOutput);
 	::system("notepad Output.txt");

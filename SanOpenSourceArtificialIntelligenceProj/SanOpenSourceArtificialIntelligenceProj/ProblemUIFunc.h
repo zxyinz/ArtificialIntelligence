@@ -4,6 +4,7 @@
 #include"ProblemSet\cJugsProblem.h"
 #include"ProblemSet\cMCProblem.h"
 #include"ProblemSet\cHOPAI.h"
+#include"AI\cPropositionalLogicResolutionAlgorithm.h"
 using namespace std;
 using namespace San;
 using namespace San::Device;
@@ -21,5 +22,8 @@ void	HOPProblem(cSanTerminalDevice* pTerminal, SString* pstrOutputString);
 uint32	HOPProblemUserMoveFunc(cHOP* pHop, SHANDLE UserData);
 uint32	HOPProblemAIMoveFunc(cHOP* pHop, SHANDLE UserData);
 void	HOPProblemPrintTime(cSanTerminalDevice* pTerminal, const SPOINT3 &Coord, const time_t Time, const eSANTERMINALCOLOR TextColor = STC_DEFAULT, const eSANTERMINALCOLOR BackgroundColor = STC_DEFAULT);
+
+void CNFProblem(cSanTerminalDevice* pTerminal, SString* pstrOutputString);
+void ResolutionAlgorithmProblem(cSanTerminalDevice* pTerminal, SString* pstrOutputString);
 
 #endif
