@@ -180,4 +180,12 @@
       <Filter>Source Files\AI</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="unicorn.txt">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="wumpus.txt">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

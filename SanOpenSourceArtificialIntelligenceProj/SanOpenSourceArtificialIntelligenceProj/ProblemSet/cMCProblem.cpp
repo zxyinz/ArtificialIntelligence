@@ -452,7 +452,7 @@ void cMCProblem::_PrintCurrentNode(const SEARCHTREE<MC, double>* pTreeNode, cons
 		*pstrOutput = *pstrOutput + strOutput;
 	}
 }
-void cMCProblem::_PrintPathList(const vector<uint32> PathList, SString* pstrOutput)
+void cMCProblem::_PrintPathList(const vector<uint32> &PathList, SString* pstrOutput)
 {
 	SString strOutput = "InitState - ";
 	for (uint32 seek = 0; seek < PathList.size(); seek = seek + 1)

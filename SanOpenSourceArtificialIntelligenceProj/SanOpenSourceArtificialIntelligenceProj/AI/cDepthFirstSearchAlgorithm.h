@@ -32,5 +32,29 @@ namespace San
 				return this->_SearchCore(InitState, MaxDepth, pstrOutput);
 			};
 		};
+
+		template<class DType, class _SuccessorGenerateFunc, class _GoalStateTestFunc>
+		class _cDepthFirstSearchAlgorithm : public cDepthFirstSearchAlgorithm<DType>
+		{
+		public:
+		protected:
+			bool _IsGoalState(const SEARCHTREE<DType, WType>* pTreeNode)
+			{ 
+				return _GoalStateTestFunc(pTreeNode); 
+			};
+
+			bool _GenerateSuccessorNodes(SEARCHTREE<DType, WType>* pTreeNode, const uint32 GlobalID)
+			{ 
+				return _SuccessorGenerateFunc(pTreeNode, GlobalID); 
+			};
+		public:
+			_cDepthFirstSearchAlgorithm(){};
+			~_cDepthFirstSearchAlgorithm(){};
+
+			vector<uint32> iSearch(const DType &InitState, const uint32 MaxDepth = 0, SString* pstrOutput = nullptr)
+			{
+				return this->_SearchCore(InitState, MaxDepth, pstrOutput);
+			};
+		};
 	}
 }

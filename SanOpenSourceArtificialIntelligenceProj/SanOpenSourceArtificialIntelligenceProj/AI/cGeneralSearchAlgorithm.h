@@ -195,12 +195,62 @@ namespace San
 			/*Print function*/
 			virtual void _PrintCurrentNode(const SEARCHTREE<DType, WType>* pTreeNode, const uint32 GlobalID, SString* pstrOutput = nullptr) = 0;
 
-			virtual void _PrintPathList(const vector<uint32> PathList, SString* pstrOutput = nullptr) = 0;
+			virtual void _PrintPathList(const vector<uint32> &PathList, SString* pstrOutput = nullptr) = 0;
 		public:
 			cGeneralSearchAlgorithm()
 			{
 			};
 			~cGeneralSearchAlgorithm()
+			{
+			};
+
+			/*Search interface fucntion, for user call				*/
+			/*MaxDepth == 0, keep searching until find the solution	*/
+			vector<uint32> iSearch(const DType &InitState, const uint32 MaxDepth = 0, SString* pstrOutput = nullptr)
+			{
+				return this->_SearchCore(InitState, MaxDepth, pstrOutput);
+			};
+		};
+
+		/*Full template version*/
+		template<class DType, class WType, class _SuccessorGenerateFunc, class _NodeCostCalcFunc, class _HeuristicEvaluateFunc, class _GoalStateTestFunc, class _CurrentNodePrintFunc, class _PathPrintFunc>
+		class _cGeneralSearchAlgorithm :public cGeneralSearchAlgorithm<DType,WType>
+		{
+		protected:
+			bool _IsGoalState(const SEARCHTREE<DType, WType>* pTreeNode)
+			{ 
+				return _GoalStateTestFunc(pTreeNode); 
+			};
+
+			bool _GenerateSuccessorNodes(SEARCHTREE<DType, WType>* pTreeNode, const uint32 GlobalID)
+			{ 
+				return _SuccessorGenerateFunc(pTreeNode, GlobalID); 
+			};
+
+			WType _CalcCurrentNodeCostVal(const SEARCHTREE<DType, WType>* pTreeNode, const uint32 GlobalID)
+			{ 
+				return _NodeCostCalcFunc(pTreeNode, GlobalID); 
+			};
+
+			WType _EvaluateHeuristicVal(const SEARCHTREE<DType, WType>* pTreeNode, const uint32 GlobalID)
+			{ 
+				return _HeuristicEvaluateFunc(pTreeNode, GlobalID); 
+			};
+
+			void _PrintCurrentNode(const SEARCHTREE<DType, WType>* pTreeNode, const uint32 GlobalID, SString* pstrOutput = nullptr)
+			{ 
+				_CurrentNodePrintFunc(pTreeNode, GlobalID, pstrOutput); 
+			};
+
+			void _PrintPathList(const vector<uint32> &PathList, SString* pstrOutput = nullptr)
+			{ 
+				_PathPrintFunc(PathList, pstrOutput); 
+			};
+		public:
+			_cGeneralSearchAlgorithm()
+			{
+			};
+			~_cGeneralSearchAlgorithm()
 			{
 			};
 

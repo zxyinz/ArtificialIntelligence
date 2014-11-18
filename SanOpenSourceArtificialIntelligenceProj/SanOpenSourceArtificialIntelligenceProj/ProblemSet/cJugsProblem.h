@@ -38,7 +38,7 @@ protected:
 	/*Print function*/
 	void _PrintCurrentNode(const SEARCHTREE<JUGS, double>* pTreeNode, const uint32 GlobalID, SString* pstrOutput = nullptr);
 	/*Print the action list*/
-	void _PrintPathList(const vector<uint32> PathList, SString* pstrOutput = nullptr);
+	void _PrintPathList(const vector<uint32> &PathList, SString* pstrOutput = nullptr);
 public:
 	cJugsProblem();
 	~cJugsProblem();

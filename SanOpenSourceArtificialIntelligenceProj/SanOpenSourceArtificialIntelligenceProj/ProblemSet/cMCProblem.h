@@ -58,7 +58,7 @@ protected:
 	/*Print function*/
 	void _PrintCurrentNode(const SEARCHTREE<MC, double>* pTreeNode, const uint32 GlobalID, SString* pstrOutput = nullptr);
 	/*Print the action list*/
-	void _PrintPathList(const vector<uint32> PathList, SString* pstrOutput = nullptr);
+	void _PrintPathList(const vector<uint32> &PathList, SString* pstrOutput = nullptr);
 public:
 	cMCProblem();
 	~cMCProblem();

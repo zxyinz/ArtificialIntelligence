@@ -205,7 +205,7 @@ void cJugsProblem::_PrintCurrentNode(const SEARCHTREE<JUGS, double>* pTreeNode, 
 		*pstrOutput = *pstrOutput + strOutput;
 	}
 }
-void cJugsProblem::_PrintPathList(const vector<uint32> PathList, SString* pstrOutput)
+void cJugsProblem::_PrintPathList(const vector<uint32> &PathList, SString* pstrOutput)
 {
 	SString strOutput = "InitState - ";
 	for (uint32 seek = 0; seek < PathList.size(); seek = seek + 1)
